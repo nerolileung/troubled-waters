@@ -10,15 +10,16 @@ public class GameManager : MonoBehaviour
         public float storage;
         public float clickMod;
         public float autoMod;
-        public Water(float store, float click, float auto){
-            storage = store;
+        public Water(float click){
+            storage = 0f;
             clickMod = click;
-            autoMod = auto;
+            autoMod = 0f;
         }
     };
 
     public Water dirty;
     public Water clean;
+    public float waterUse;
     #endregion
 
     #region ui elements
@@ -33,8 +34,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dirty = new Water(0f, 1f, 0f);
-        clean = new Water(0f, 0.2f, 0f);
+        dirty = new Water(1f);
+        clean = new Water(0.2f);
+        waterUse = 0f;
 
         // todo load save data
     }
