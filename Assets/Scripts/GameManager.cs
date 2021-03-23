@@ -31,12 +31,15 @@ public class GameManager : MonoBehaviour
     private Image cleanFill;
     #endregion
 
+    float timer;
+
     // Start is called before the first frame update
     void Start()
     {
         dirty = new Water(1f);
         clean = new Water(0.2f);
         waterUse = 0f;
+        timer = 0f;
 
         // todo load save data
     }
@@ -44,10 +47,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // increment water by auto mod
-
-        // water usage starts with clean water
-
+        timer += Time.deltaTime;
+        if (timer > 1){
+            // increment water by auto modifiers every second
+            dirty.storage = CleanFloat(dirty.storage+dirty.autoMod);
+            clean.storage = CleanFloat(clean.storage+clean.autoMod);
+            timer = 0f;
+            // water usage starts with clean water
+            if (waterUse > clean.storage){
+                clean.storage = 0f;
+                float remainder = CleanFloat(clean.storage-waterUse);
+                dirty.storage = CleanFloat(dirty.storage-remainder);
+            }
+            else clean.storage = CleanFloat(clean.storage-waterUse);
+        }
         UpdateUI();
     }
 
