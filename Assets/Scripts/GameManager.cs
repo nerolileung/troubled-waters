@@ -91,11 +91,11 @@ public class GameManager : MonoBehaviour
     private void UpdateUI(){
         // water
         if (dirty.storage % 1 == 0)
-            dirtyText.text = string.Format("Dirty Water: {0,0:F0}",dirty.storage);
-        else dirtyText.text = string.Format("Dirty Water: {0,0:F1}",dirty.storage);
+            dirtyText.text = string.Format("DIRTY WATER: {0,0:F0}",dirty.storage);
+        else dirtyText.text = string.Format("DIRTY WATER: {0,0:F1}",dirty.storage);
 
         if (clean.storage % 1 == 0)
-            cleanText.text = string.Format("Clean Water: {0,0:F0}",clean.storage);
-        else cleanText.text = string.Format("Clean Water: {0,0:F1}",clean.storage);
+            cleanText.text = string.Format("CLEAN WATER: {0,0:F0}",clean.storage);
+        else cleanText.text = string.Format("CLEAN WATER: {0,0:F1}",clean.storage);
     }
 }
