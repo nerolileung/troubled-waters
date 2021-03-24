@@ -85,6 +85,8 @@ public class UpgradeManager : MonoBehaviour
             float dirtyAuto = 0f;
             float cleanClick = 0.2f;
             float cleanAuto = 0f;
+            float pureClick = 0f;
+            float pureAuto = 0f;
 
             // bucket
             dirtyClick = manager.CleanFloat(dirtyClick+boosts["bucket"].count);
@@ -99,9 +101,8 @@ public class UpgradeManager : MonoBehaviour
             
             // helping hand
             dirtyAuto = manager.CleanFloat(dirtyAuto+boosts["helping hand"].count);
-            manager.ChangeWaterUse(0.2f*boosts["helping hand"].count);
             if (upgrades["sewage treatment"].bought) // return half consumed water
-                cleanAuto = manager.CleanFloat(cleanAuto+(manager.GetWaterUse()/2));
+                pureAuto = manager.CleanFloat(pureAuto+(manager.GetWaterUse()/2));
             else if (upgrades["sewers"].bought) // add half consumed water as dirty
                 dirtyAuto = manager.CleanFloat(dirtyAuto+(manager.GetWaterUse()/2));
             
@@ -113,44 +114,42 @@ public class UpgradeManager : MonoBehaviour
                 cleanClick = manager.CleanFloat(cleanClick+(0.2f*boosts["water filter"].count));
 
             // still
-            dirtyAuto = manager.CleanFloat(dirtyAuto-(0.2f*boosts["still"].count));
             cleanAuto = manager.CleanFloat(cleanAuto+(0.2f*boosts["still"].count));
             if (upgrades["clean equipment"].bought){
-                dirtyAuto = manager.CleanFloat(dirtyAuto-(0.1f*boosts["still"].count));
                 cleanAuto = manager.CleanFloat(cleanAuto+(0.1f*boosts["still"].count));
             }
             if (upgrades["clean fuel"].bought){
-                dirtyAuto = manager.CleanFloat(dirtyAuto-(0.1f*boosts["still"].count));
                 cleanAuto = manager.CleanFloat(cleanAuto+(0.1f*boosts["still"].count));
             }
             if (upgrades["trained operators"].bought){
-                dirtyAuto = manager.CleanFloat(dirtyAuto-(0.02f*boosts["helping hand"].count*boosts["still"].count));
                 cleanAuto = manager.CleanFloat(cleanAuto+(0.02f*boosts["helping hand"].count*boosts["still"].count));
             }
 
             // rainwater collector
-            float rainBoost = manager.CleanFloat(0.5f*boosts["rainwater collector"].count);
-            if (upgrades["strong plastic"].bought)
-                rainBoost = manager.CleanFloat(rainBoost+(0.1f*boosts["rainwater collector"].count));
-            if (upgrades["water butts"].bought)
-                rainBoost = manager.CleanFloat(rainBoost+(0.2f*boosts["rainwater collector"].count));
-            if (upgrades["roof gutters"].bought)
-                dirtyAuto = manager.CleanFloat(dirtyAuto+(0.02f*rainBoost*boosts["helping hand"].count));
-            cleanAuto = manager.CleanFloat(cleanAuto+rainBoost);
+            pureAuto = manager.CleanFloat(pureAuto+(0.5f*boosts["rainwater collector"].count));
+            if (upgrades["strong plastic"].bought) // 20% of 0.5
+                pureAuto = manager.CleanFloat(pureAuto+(0.1f*boosts["rainwater collector"].count));
+            if (upgrades["water butts"].bought) // 40% of 0.5
+                pureAuto = manager.CleanFloat(pureAuto+(0.2f*boosts["rainwater collector"].count));
+            if (upgrades["roof gutters"].bought) // 2% of 1.6x0.5
+                dirtyAuto = manager.CleanFloat(dirtyAuto+(0.8f*boosts["rainwater collector"].count*0.02f*boosts["helping hand"].count));
 
             // well
-            cleanClick = manager.CleanFloat(cleanClick+(0.1f*boosts["well"].count));
+            pureClick = manager.CleanFloat(pureClick+(0.1f*boosts["well"].count));
             if (upgrades["hand pump"].bought)
-                cleanClick = manager.CleanFloat(cleanClick+(0.2f*boosts["well"].count));
+                pureClick = manager.CleanFloat(pureClick+(0.2f*boosts["well"].count));
             if (upgrades["electric pump"].bought)
-                cleanClick = manager.CleanFloat(cleanClick+(0.2f*boosts["well"].count));
+                pureClick = manager.CleanFloat(pureClick+(0.2f*boosts["well"].count));
             if (upgrades["hard workers"].bought)
-                cleanClick = manager.CleanFloat(cleanClick+(0.1f*boosts["well"].count*boosts["helping hand"].count));
+                pureClick = manager.CleanFloat(pureClick+(0.1f*boosts["well"].count*boosts["helping hand"].count));
 
+            manager.ChangeWaterUse(0.2f*boosts["helping hand"].count);
             manager.dirty.clickMod = dirtyClick;
             manager.dirty.autoMod = dirtyAuto;
             manager.clean.clickMod = cleanClick;
             manager.clean.autoMod = cleanAuto;
+            manager.pure.clickMod = pureClick;
+            manager.pure.autoMod = pureAuto;
 
             // clean flag
             upgradesChanged = false;
