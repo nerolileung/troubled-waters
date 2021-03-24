@@ -189,7 +189,8 @@ public class UpgradeManager : MonoBehaviour
             upgrades[id] = new Upgrade(upgrades[id].cost,true);
             
             currButt.interactable = false;
-            nextButt.interactable = true;
+            if (nextButt != null)
+                nextButt.interactable = true;
 
             upgradesChanged = true;
         }
