@@ -15,12 +15,20 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject cleanWaterParticle;
 
+    public GameObject logo;
+
     private void Start()
     {
     }
 
     void Update()
     {
+        if (Input.GetKeyDown("e"))
+        {
+            logo.GetComponent<Animator>().SetBool("started", true);
+            logo.transform.Find("Canvas").gameObject.SetActive(false);
+        }
+
         ContactFilter2D contactFilter = new ContactFilter2D();
         contactFilter.SetLayerMask(LayerMask.GetMask("Interactable"));
         contactFilter.useLayerMask = true;
@@ -53,25 +61,28 @@ public class PlayerController : MonoBehaviour
         float verticalForce = Input.GetAxis("Vertical");
         Vector2 combinedForce = new Vector2(horizontalForce, verticalForce);
 
-        rb.AddForce(Vector2.ClampMagnitude(combinedForce, 1) * speed);
-        if (horizontalForce > 0 && facingRight == true)
+        if (logo.GetComponent<Animator>().GetBool("started"))
         {
-            FlipSprite();
-            facingRight = false;
-        }
-        if (horizontalForce < 0 && facingRight == false)
-        {
-            FlipSprite();
-            facingRight = true;
-        }
+            rb.AddForce(Vector2.ClampMagnitude(combinedForce, 1) * speed);
+            if (horizontalForce > 0 && facingRight == true)
+            {
+                FlipSprite();
+                facingRight = false;
+            }
+            if (horizontalForce < 0 && facingRight == false)
+            {
+                FlipSprite();
+                facingRight = true;
+            }
 
-        if (horizontalForce != 0 || verticalForce != 0)
-        {
-            animator.SetBool("moving", true);
-        }
-        else
-        {
-            animator.SetBool("moving", false);
+            if (horizontalForce != 0 || verticalForce != 0)
+            {
+                animator.SetBool("moving", true);
+            }
+            else
+            {
+                animator.SetBool("moving", false);
+            }
         }
     }
 
