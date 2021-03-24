@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public Water dirty;
     public Water clean;
-    public float waterUse;
+    private float waterUse;
     #endregion
 
     #region ui elements
@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
     private Text dirtyText;
     [SerializeField]
     private Text cleanText;
-    [SerializeField]
-    private Image cleanFill;
     #endregion
 
     float timer;
@@ -83,17 +81,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ChangeWaterUse(float change){
+        waterUse = CleanFloat(waterUse+change);
+    }
+    public float GetWaterUse(){
+        return waterUse;
+    }
+
     private void UpdateUI(){
         // water
         if (dirty.storage % 1 == 0)
-            dirtyText.text = dirty.storage.ToString("F0");
-        else dirtyText.text = dirty.storage.ToString("F1");
+            dirtyText.text = string.Format("Dirty Water: {0,0:F0}",dirty.storage);
+        else dirtyText.text = string.Format("Dirty Water: {0,0:F1}",dirty.storage);
 
         if (clean.storage % 1 == 0)
-            cleanText.text = clean.storage.ToString("F0");
-        else cleanText.text = clean.storage.ToString("F1");
-
-        float remainder = clean.storage % 1;
-        cleanFill.fillAmount = remainder;
+            cleanText.text = string.Format("Clean Water: {0,0:F0}",clean.storage);
+        else cleanText.text = string.Format("Clean Water: {0,0:F1}",clean.storage);
     }
 }

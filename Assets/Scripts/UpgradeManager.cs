@@ -99,11 +99,11 @@ public class UpgradeManager : MonoBehaviour
             
             // helping hand
             dirtyAuto = manager.CleanFloat(dirtyAuto+boosts["helping hand"].count);
-            manager.waterUse = manager.CleanFloat(0.2f*boosts["helping hand"].count);
+            manager.ChangeWaterUse(0.2f*boosts["helping hand"].count);
             if (upgrades["sewage treatment"].bought) // return half consumed water
-                cleanAuto = manager.CleanFloat(cleanAuto+(manager.waterUse/2));
+                cleanAuto = manager.CleanFloat(cleanAuto+(manager.GetWaterUse()/2));
             else if (upgrades["sewers"].bought) // add half consumed water as dirty
-                dirtyAuto = manager.CleanFloat(dirtyAuto+(manager.waterUse/2));
+                dirtyAuto = manager.CleanFloat(dirtyAuto+(manager.GetWaterUse()/2));
             
             // water filter
             cleanClick = manager.CleanFloat(cleanClick+(0.2f*boosts["water filter"].count));
