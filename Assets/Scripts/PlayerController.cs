@@ -7,35 +7,43 @@ public class PlayerController : MonoBehaviour
     public float speed;
     private bool facingRight;
 
-    Rigidbody2D rb;
-    Collider2D col;
-    SpriteRenderer spriteRenderer;
-    Animator animator;
+    public Rigidbody2D rb;
+    public Collider2D col;
+    public SpriteRenderer guySprite;
+    public SpriteRenderer shadowSprite;
+    public SpriteRenderer eSprite;
+    public Animator animator;
+    public GameObject cleanWaterParticle;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        if(Input.GetKeyDown("e"))
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        contactFilter.SetLayerMask(LayerMask.GetMask("Interactable"));
+        contactFilter.useLayerMask = true;
+        contactFilter.useTriggers = true;
+        Collider2D[] colliders = new Collider2D[10];
+
+        Physics2D.OverlapCollider(col, contactFilter, colliders);
+
+        if (colliders[0] != null)
         {
-            ContactFilter2D contactFilter = new ContactFilter2D();
-            contactFilter.SetLayerMask(LayerMask.GetMask("Interactable"));
-            contactFilter.useLayerMask = true;
-            contactFilter.useTriggers = true;
-            Collider2D[] colliders = new Collider2D[10];
-
-            Physics2D.OverlapCollider(col, contactFilter, colliders);
-
-            if (colliders[0] != null)
+            eSprite.enabled = true;
+            if (Input.GetKeyDown("e"))
             {
-                Debug.Log(colliders[0].gameObject.GetComponent<Interactable>().Interact());
+                colliders[0].gameObject.GetComponent<Interactable>().Interact();
+                if (colliders[0].gameObject.TryGetComponent(out InteractableFilter filter) || colliders[0].gameObject.TryGetComponent(out InteractableRiver river))
+                {
+                    Instantiate(cleanWaterParticle, this.transform);
+                }
             }
+        }
+        else
+        {
+            eSprite.enabled = false;
         }
     }
 
@@ -69,6 +77,6 @@ public class PlayerController : MonoBehaviour
 
     private void FlipSprite()
     {
-        spriteRenderer.flipX = !spriteRenderer.flipX;
+        guySprite.flipX = !guySprite.flipX;
     }
 }
