@@ -7209,7 +7209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dirtyText: {fileID: 1188629185}
   cleanText: {fileID: 1314261177}
-  debugMode: 0
+  debugMode: 1
 --- !u!4 &1559382729
 Transform:
   m_ObjectHideFlags: 0
@@ -7700,7 +7700,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1876454212}
   m_Layer: 0
-  m_Name: Well
+  m_Name: Wells
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
