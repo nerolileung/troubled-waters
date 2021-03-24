@@ -41,6 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Environment
+    uniqueID: 2937718977
+    locked: 0
+  - name: Buildings
+    uniqueID: 2550338095
+    locked: 0
+  - name: Character
+    uniqueID: 3394661491
+    locked: 0
   - name: Particles
     uniqueID: 3475301203
+    locked: 0
+  - name: UI
+    uniqueID: 4271266151
     locked: 0

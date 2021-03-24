@@ -10,12 +10,14 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Collider2D col;
     SpriteRenderer spriteRenderer;
+    Animator animator;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -53,6 +55,15 @@ public class PlayerController : MonoBehaviour
         {
             FlipSprite();
             facingRight = true;
+        }
+
+        if (horizontalForce != 0 || verticalForce != 0)
+        {
+            animator.SetBool("moving", true);
+        }
+        else
+        {
+            animator.SetBool("moving", false);
         }
     }
 
