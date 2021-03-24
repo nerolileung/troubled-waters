@@ -78,5 +78,6 @@ public class PlayerController : MonoBehaviour
     private void FlipSprite()
     {
         guySprite.flipX = !guySprite.flipX;
+        shadowSprite.flipX = !guySprite.flipX;
     }
 }

@@ -34,11 +34,11 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    private Dictionary<string,Boost> boosts = new Dictionary<string, Boost>();
+    public Dictionary<string,Boost> boosts = new Dictionary<string, Boost>();
     private Dictionary<string,Upgrade> upgrades = new Dictionary<string,Upgrade>();
     [SerializeField]
     private GameManager manager;
-    private bool upgradesChanged;
+    public bool upgradesChanged;
     [SerializeField]
     private ScrollRect scrollContent;
 
