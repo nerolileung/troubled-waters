@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour
     private Text cleanText;
     #endregion
 
-    float timer;
+    private float timer;
+
+    public bool debugMode;
 
     // Start is called before the first frame update
     void Start()
@@ -39,12 +41,21 @@ public class GameManager : MonoBehaviour
         waterUse = 0f;
         timer = 0f;
 
+        debugMode = false;
+
         // todo load save data
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (debugMode) {
+            if (Input.GetKeyDown("r")) {
+                dirty.storage = CleanFloat(dirty.storage+1000f);
+                clean.storage = CleanFloat(clean.storage+1000f);
+            }
+        }
+        // per second effects
         timer += Time.deltaTime;
         if (timer > 1){
             // increment water by auto modifiers every second
